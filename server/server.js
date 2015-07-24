@@ -12,14 +12,16 @@ http.createServer(function(request, response) {
 	var resourcePath = getPathName(urlParts);
 
 	try {
+		console.log('new request: ' + resourcePath);
 		handleRequest();
 	} catch (err) {
-		throw err;
-		respond(500, err);
+		console.log('error: ' + xserr);
+		respond(500, 'Server Error: ' + err);
 	}
 
 	function handleRequest(){
 		if (resourcePath == "/save") {
+			console.log('saving');
 			//save the data
 			if (query["data"]) {
 				var username = query["user"];
@@ -90,6 +92,8 @@ http.createServer(function(request, response) {
 	}
 
 	function saveFileForUser(username, filename, dataParam) {
+		console.log('Saving file for user');
+
 		if (!fs.existsSync('./' + username)) {
             fs.mkdirSync('./' + username, 0744);
         }
